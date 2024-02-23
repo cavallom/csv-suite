@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/cavallom/csv-suite/issues"
   },
-  "homepage": "https://github.com/cavallom/csv-suite#readme"
+  "homepage": "https://github.com/cavallom/csv-suite#readme",
+  "dependencies": {
+    "csv-alidator": "^1.0.8",
+    "csv-except": "^1.0.1",
+    "csv-queryable": "^1.0.4"
+  }
 }
