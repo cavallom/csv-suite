@@ -1,6 +1,6 @@
 {
   "name": "csv-suite",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An NPM package that contains a collection of utilities written in JavaScript to work with CSV files: you can validate, analyze, compare and much more",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "homepage": "https://github.com/cavallom/csv-suite#readme",
   "dependencies": {
     "csv-alidator": "^1.0.8",
-    "csv-except": "^1.0.1",
+    "csv-except": "^1.0.4",
     "csv-queryable": "^1.0.4"
   }
 }

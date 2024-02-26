@@ -28,6 +28,27 @@ itWorks = function() {
 
 }
 
+jesonize = function(csvArray, header) {
+
+    const start = Date.now();
+
+    try {
+
+        return csve.jesonize(csvArray, header);
+
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_suite_Error(
+            'jesonize'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
+
+}
+
 booleanValidation = function(filePath) {
 
     const start = Date.now();
@@ -250,6 +271,7 @@ csv_suite_Error.prototype = Error.prototype;
 
 module.exports = { 
     itWorks
+    , jesonize
     , booleanValidation
     , jsonValidation
     , memorize

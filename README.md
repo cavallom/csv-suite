@@ -18,6 +18,7 @@ The developer of all the included packages is the same and therefore a single co
       - [exceptRight](#exceptright)
       - [intersect](#intersect)
       - [notintersect](#notintersect)
+      - [jesonize](#jesonize)
     - [Selection](#selection)
       - [memorize](#memorize)
       - [select](#select)
@@ -191,6 +192,47 @@ const csvsuite = require('csv-suite');
 console.log(csvsuite.notintersect('path-to-local-csv-file', 'path-to-local-csv-file'));
 
 #output : { array[][] } > rows
+```
+
+#### jesonize
+
+Returns the output array converted to json.
+
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| csvArray | Array[][] | true | A queryable csv array loaded with the **memorize** function |
+| header | Array of strings | true | Defines the column names of the csv file |
+
+```bash
+const csvsuite = require('csv-suite');
+const header = new Array("Index","Organization Id","Name","Website","Country","Description","Founded","Industry","Number of employees");
+console.log(csvsuite.jesonize(exceptLeft|exceptRight|intersect|notintersect, header);
+
+#output : { json } >
+#[
+#    {
+#        "Index": "91",
+#        "Organization Id": "7ABc3c7ecA03B34",
+#        "Name": "Sampson-Griffith",
+#        "Website": "http://hendricks.org/",
+#        "Country": "Benin",
+#        "Description": "Multi-layered composite paradigm",
+#        "Founded": "1972",
+#        "Industry": "Textiles",
+#        "Number of employees": "3881"
+#    },
+#    {
+#        "Index": "100",
+#        "Organization Id": "e9eB5A60Cef8354",
+#        "Name": "Watkins-Kaiser",
+#        "Website": "http://www.herring.com/",
+#        "Country": "Togo",
+#        "Description": "Synergistic background access",
+#        "Founded": "2009",
+#        "Industry": "Financial Services",
+#        "Number of employees": "2785"
+#    }
+#]
 ```
 
 ### Selection
