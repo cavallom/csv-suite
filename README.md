@@ -350,7 +350,7 @@ csvsuite.setLimit([1,6]);
 
 ## Performance considerations
 
-**csv-suite** is designed and tested to quickly validate, load and navigate even large csv files with millions of rows and many columns. For even better performance, we recommend loading the csv files at the start of the work session, thus making them available for multiple queries.
+**csv-suite** is designed and tested to quickly validate, comapre, load and navigate even large csv files with millions of rows and many columns. For even better performance, we recommend loading the csv files at the start of the work session, thus making them available for multiple queries.
 
 ## Comma-Separated Values (CSV)
 
