@@ -1,6 +1,6 @@
 {
   "name": "csv-suite",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An NPM package that contains a collection of utilities written in JavaScript to work with CSV files: you can validate, analyze, compare and much more",
   "main": "index.js",
   "scripts": {

@@ -1,6 +1,7 @@
 # csv-suite
 An NPM package that contains a collection of utilities written in **JavaScript** to work with CSV files: you can validate, analyze, compare and much more. If you prefer, you can install the specific packages separately:
 * [**csv-alidator**](https://www.npmjs.com/package/csv-alidator)
+* [**csv-except**](https://www.npmjs.com/package/csv-except)
 * [**csv-queryable**](https://www.npmjs.com/package/csv-queryable)
 
 The developer of all the included packages is the same and therefore a single container package is much more practical and easier to manage. Below are all the features currently included.
@@ -12,12 +13,18 @@ The developer of all the included packages is the same and therefore a single co
     - [Validations](#validations)
       - [booleanValidation](#booleanvalidation)
       - [jsonValidation](#jsonvalidation)
-    - [memorize](#memorize)
-    - [select](#select)
-      - [Select syntax examples](#select-syntax-examples)
-      - [Select with not mandatory params](#select-with-not-mandatory-params)
-    - [getLimit](#getlimit)
-    - [setLimit](#setlimit)
+    - [Comparison](#comparison)
+      - [exceptLeft](#exceptleft)
+      - [exceptRight](#exceptright)
+      - [intersect](#intersect)
+      - [notintersect](#notintersect)
+    - [Selection](#selection)
+      - [memorize](#memorize)
+      - [select](#select)
+        - [Select syntax examples](#select-syntax-examples)
+        - [Select with not mandatory params](#select-with-not-mandatory-params)
+      - [getLimit](#getlimit)
+      - [setLimit](#setlimit)
   - [Performance considerations](#performance-considerations)
   - [Comma-Separated Values (CSV)](#comma-separated-values-csv)
   - [License](#license)
@@ -45,7 +52,7 @@ console.log(csvsuite.itWorks());
 #output : { json } > {
 #    "itWorks": "Yes, it works!",
 #    "package": "csv-suite",
-#    "version": "1.0.2"
+#    "version": "1.0.3"
 #}
 ```
 
@@ -120,7 +127,75 @@ console.log(csvsuite.jsonValidation('path-to-local-csv-file'));
 #}
 ```
 
-### memorize
+### Comparison
+
+#### exceptLeft
+
+Returns rows which are present in **leftFilePath** excluding rows ​​that are also present in **rightFilePath**. So the rows ​​that are only in **leftFilePath**.
+
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| leftFilePath | string | true | Path to left local CSV file |
+| rightFilePath | string | true | Path to right local CSV file |
+
+```bash
+const csvsuite = require('csv-suite');
+console.log(csvsuite.exceptLeft('path-to-local-csv-file', 'path-to-local-csv-file'));
+
+#output : { array[][] } > rows
+```
+
+#### exceptRight
+
+Returns rows which are present in **rightFilePath** excluding rows ​​that are also present in **leftFilePath**. So the rows ​​that are only in **rightFilePath**.
+
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| leftFilePath | string | true | Path to left local CSV file |
+| rightFilePath | string | true | Path to right local CSV file |
+
+```bash
+const csvsuite = require('csv-suite');
+console.log(csvsuite.exceptRight('path-to-local-csv-file', 'path-to-local-csv-file'));
+
+#output : { array[][] } > rows
+```
+
+#### intersect
+
+Returns rows which are present in both **leftFilePath** and **rightFilePath**.
+
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| leftFilePath | string | true | Path to left local CSV file |
+| rightFilePath | string | true | Path to right local CSV file |
+
+```bash
+const csvsuite = require('csv-suite');
+console.log(csvsuite.intersect('path-to-local-csv-file', 'path-to-local-csv-file'));
+
+#output : { array[][] } > rows
+```
+
+#### notintersect
+
+Returns rows in **leftFilePath** which are not present in **rightFilePath** and rows in **rightFilePath** which are not present in **leftFilePath**.
+
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| leftFilePath | string | true | Path to left local CSV file |
+| rightFilePath | string | true | Path to right local CSV file |
+
+```bash
+const csvsuite = require('csv-suite');
+console.log(csvsuite.notintersect('path-to-local-csv-file', 'path-to-local-csv-file'));
+
+#output : { array[][] } > rows
+```
+
+### Selection
+
+#### memorize
 
 Loads a CSV file into memory and prepares it for query execution. If the file is not formally correct the function returns an error message. Please refer to the RCF 4180 directives which document the format used for Comma-Separated Values ​​(CSV) of the associated MIME type "text/csv". Below is the link to the csv specifications: [Comma-Separated Values (CSV)](#comma-separated-values-csv)
 
@@ -144,7 +219,7 @@ let load = csvsuite.memorize(csvFile, csvDelimiter, ignoreEmptyRows);
 #output : queryable csv array
 ```
 
-### select
+#### select
 
 With the **select** function it is possible to filter and extract the loaded csv data. Further on in the section [Select syntax examples](#select-syntax-examples) some examples of conditional extraction with the explanation of the syntax. The output, even when reading millions of records, is very fast and immediate.
 
@@ -190,7 +265,7 @@ let output = csvsuite.select(load, header, columns, where, limit);
 #]
 ```
 
-#### Select syntax examples
+##### Select syntax examples
 
 At the moment **csv-suite** uses three custom comparison operators: **==** as equals, **!=** as different, **%%** as like. To optimize and speed up data extraction, **where** conditions are applied sequentially in concentric sets. This is why the sorting in the array of **where** conditions determines the result of the query. Even fields that will not be extracted can be included in **where** conditions. It depends on the need of the query whether to start from the smallest or largest set. The **limit** parameter works as **.slice()** so returns **start** to **end** (end not included) where start and end represent the index of items in the query result.
 
@@ -219,7 +294,7 @@ const limit = new Array(0,2);
 #]
 ```
 
-#### Select with not mandatory params
+##### Select with not mandatory params
 
 Here are some examples of calling the select function excluding the optional parameters. The following data extraction logics should be taken into consideration:
 * in the absence of the **limit** parameter, the default ones will be used. In section [setLimit](#setlimit) the instructions on how to set the default limit
@@ -243,7 +318,7 @@ let output = csvsuite.select(load, header, colums, where, limit);
 let output = csvsuite.select(load, undefinited, colums, undefinited, limit);
 ```
 
-### getLimit
+#### getLimit
 
 Returns the default **select limit** used when the parameter is not passed to the function.
 
@@ -258,7 +333,7 @@ let l = csvsuite.getLimit();
 #output : [ 1, 6 ]
 ```
 
-### setLimit
+#### setLimit
 
 Sets runtime the default **select limit** used when the parameter is not passed to the function.
 

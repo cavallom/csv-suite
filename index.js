@@ -2,6 +2,7 @@
 const pjson = require('./package.json');
 const csva = require('csv-alidator');
 const csvq = require('csv-queryable');
+const csve = require('csv-except');
 
 itWorks = function() {
     
@@ -152,6 +153,91 @@ getLimit = function() {
     }
 
 }
+
+exceptLeft = function(leftFilePath, rightFilePath) {
+
+    const start = Date.now();
+
+    try {
+
+        return csve.exceptLeft(leftFilePath, rightFilePath);
+
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_suite_Error(
+            'exceptLeft'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
+
+}
+
+exceptRight = function(leftFilePath, rightFilePath) {
+
+    const start = Date.now();
+
+    try {
+
+        return csve.exceptRight(leftFilePath, rightFilePath);
+
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_suite_Error(
+            'exceptRight'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
+
+}
+
+intersect = function(leftFilePath, rightFilePath) {
+
+    const start = Date.now();
+
+    try {
+
+        return csve.intersect(leftFilePath, rightFilePath);
+
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_suite_Error(
+            'intersect'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
+
+}
+
+notintersect = function(leftFilePath, rightFilePath) {
+
+    const start = Date.now();
+
+    try {
+
+        return csve.notintersect(leftFilePath, rightFilePath);
+
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_suite_Error(
+            'notintersect'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
+
+}
+
 csv_suite_Error = function(routine = "", executiontime = "", message = "") { 
     
     this.routine = routine;
@@ -162,4 +248,16 @@ csv_suite_Error = function(routine = "", executiontime = "", message = "") {
 } 
 csv_suite_Error.prototype = Error.prototype;
 
-module.exports = { itWorks, booleanValidation, jsonValidation, memorize, select, setLimit, getLimit };
+module.exports = { 
+    itWorks
+    , booleanValidation
+    , jsonValidation
+    , memorize
+    , select
+    , setLimit
+    , getLimit
+    , exceptLeft
+    , exceptRight
+    , intersect
+    , notintersect
+};
